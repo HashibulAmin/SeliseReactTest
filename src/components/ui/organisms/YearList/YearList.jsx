@@ -21,11 +21,12 @@ const StyledSelect = styled(Select)({
   },
 });
 
-const YearSelector = () => {
+const YearSelector = ({handleYearChange}) => {
   const [selectedMonth, setSelectedMonth] = useState('');
 
   const handleChange = (event) => {
     setSelectedMonth(event.target.value);
+    handleYearChange(Number(event.target.value))
   };
 
   return (

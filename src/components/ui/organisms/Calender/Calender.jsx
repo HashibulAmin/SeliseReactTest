@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Box, Typography, Button } from '@mui/material';
 
+
+
 const Calendar = ({yearData, monthData}) => {
   const [currentDate, setCurrentDate] = useState(dayjs());
 
@@ -34,7 +36,9 @@ const Calendar = ({yearData, monthData}) => {
     // console.log(yearData, monthData);
     if(yearData && monthData)
         setCurrentDate(dayjs().year(yearData).month(monthData))
-  },[yearData, yearData])
+    else if(monthData)  setCurrentDate(dayjs().month(monthData))
+    
+  },[yearData, monthData])
 
   return (
     <Box sx={{margin: 'auto', textAlign: 'center', marginTop: '2rem' }}>
@@ -59,6 +63,7 @@ const Calendar = ({yearData, monthData}) => {
             }}
           >
             <Typography variant="body2">{date.format('D')}</Typography>
+            <div>data</div>
           </Box>
         ))}
       </Box>
