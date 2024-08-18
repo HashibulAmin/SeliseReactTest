@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  list: [],
+  lists: [],
 };
 
 export const appointment = createSlice({
@@ -9,10 +9,11 @@ export const appointment = createSlice({
   initialState,
   reducers: {
     addAppointment: (state, action) => {
-      state.list = [...state.list, action.data];
+      // console.log(action, 'redux')
+      state.lists = [...state.list, action.payload];
     },
     deleteAppointment: (state) => {
-      state.list = [];
+      state.lists = [];
     },
   },
 });

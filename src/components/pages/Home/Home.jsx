@@ -7,6 +7,9 @@ import MonthSelector from "../../ui/organisms/MonthList/MonthList"
 import YearSelector from "../../ui/organisms/YearList/YearList"
 import Calendar from "../../ui/organisms/Calender/Calender"
 
+import { useDispatch, useSelector } from "react-redux";
+import { appointmentActions } from "../../../store/appointment";
+
 import {useParams} from "react-router-dom";
 
 export const monthList = {
@@ -42,7 +45,11 @@ const StyledButton = styled(ButtonComp)(() => ({}));
 
 const Home = () => {
 
+  const dispatch = useDispatch();
+
   const {year, month} = useParams();
+
+  const appointmentLists = useSelector((state) => state.appointment.lists);
 
   const [yearData, setYearData] = useState(null)
   const [monthData, setMonthData] = useState(null)
@@ -71,6 +78,12 @@ const Home = () => {
 
   // console.log(year, month)
 
+  const handleFormSubmit = (data) => {
+    dispatch(appointmentActions.addAppointment(data))
+    handleClose()
+  }
+
+  console.log(appointmentLists);
 
   return (
     <React.Fragment>
@@ -86,7 +99,7 @@ const Home = () => {
     <Calendar yearData={yearData} monthData={monthData} />
 
     <BasicModal open={open} handleClose={handleClose}>
-      <FormComponent> </FormComponent>
+      <FormComponent handleFormSubmit={handleFormSubmit}> </FormComponent>
     </BasicModal>
 
 

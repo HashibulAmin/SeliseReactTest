@@ -1,8 +1,8 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 import { styled } from "@mui/system";
-import TextfieldComp from "../../atoms/Textfield/TextfieldComp";
+// import TextfieldComp from "../../atoms/Textfield/TextfieldComp";
 import ButtonComp from "../../atoms/Button/ButtonComp";
 import TypographyComp from "../../atoms/Typography/TypographyComp";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -10,6 +10,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+
+import dayjs from 'dayjs';
+
+import FormInputText from "../../atoms/FormTextInput";
 
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -26,9 +30,9 @@ const AppForm = styled("form")(() => ({
     gap: "10px",
   }));
 
-const StyledTextField = styled(TextfieldComp)(() => ({
-    width: "20rem",
-  }));
+// const StyledTextField = styled(TextfieldComp)(() => ({
+//     width: "20rem",
+//   }));
 
 const StyledSelectField = styled(Select)(() => ({
     width: "20rem",
@@ -36,61 +40,99 @@ const StyledSelectField = styled(Select)(() => ({
   
 const StyledButton = styled(ButtonComp)(() => ({}));
 
-const FormComponent = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+
+const options = [
+  {
+    label: "Male",
+    value: "1",
+  },
+  {
+    label: "Female",
+    value: "2",
+  },
+  {
+    label: "Other",
+    value: "3",
+  },
+];
+
+const FormComponent = ({ handleFormSubmit }) => {
+  const { register, handleSubmit, control, formState: { errors } } = useForm();
+
+  const [eventDate, setEventDate] = useState('')
+  const [eventTime, setEventTime] = useState('')
 
   const onSubmit = data => {
-    console.log(data);
+    const payload = {
+      ...data,
+      eventDate,
+      eventTime,
+    }
+    // console.log(payload)
+    handleFormSubmit(payload)
   };
+
+  const generateSingleOptions = () => {
+    return options.map((option) => {
+      return (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label}
+        </MenuItem>
+      );
+    });
+  };
+
+  const onDateChange = (data) => {
+    // console.log(dayjs(data).format('DD/MM/YYYY'))
+    setEventDate(dayjs(data).format('DD/MM/YYYY'))
+  }
+
+  const onTimeChange = (data) => {
+    // console.log()
+    setEventTime(dayjs(data).format('HH:mm:ss'))
+  }
+
 
   return (
     <AppForm 
 
-        onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit(onSubmit)
-        }}
+        onSubmit={handleSubmit(onSubmit)}
     
     >
       <div>
-        <TypographyComp variant="subtitle1">Name</TypographyComp>
-        <StyledTextField
-          id="firstName"
-          {...register('firstName', { required: 'First name is required' })}
+        <FormInputText
+          name={"name"}
+          control={control}
+          label={"Name"}
         />
-        {errors.firstName && <p>{errors.firstName.message}</p>}
       </div>
 
       <div>
       <TypographyComp variant="subtitle1">Gender</TypographyComp>
-        <StyledSelectField {...register("gender")}>
-            <MenuItem value="female">female</MenuItem>
-            <MenuItem value="male">male</MenuItem>
-            <MenuItem value="other">other</MenuItem>
-        </StyledSelectField>
+      <Controller
+        render={({ field: { onChange, value } }) => (
+          <Select onChange={onChange} value={value}>
+            {generateSingleOptions()}
+          </Select>
+        )}
+        control={control}
+        name={'gender'}
+      />
       </div>
       
       <div>
-        <TypographyComp htmlFor="age" variant="subtitle1">Age</TypographyComp>
-        <StyledTextField
-          id="age"
+        <FormInputText
+          name={"age"}
+          control={control}
+          label={"age"}
           type="number"
-          {...register('age', { 
-            required: 'Age is required',
-            valueAsNumber: true,
-            min: {
-              value: 18,
-              message: 'You must be at least 18 years old',
-            },
-          })}
         />
-        {errors.age && <p>{errors.age.message}</p>}
       </div>
 
       <div>
       <TypographyComp variant="subtitle1">Date</TypographyComp>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-             <DatePicker />
+             <DatePicker onChange={onDateChange} />
         </LocalizationProvider>
       </div>
 
@@ -98,7 +140,7 @@ const FormComponent = () => {
       <TypographyComp variant="subtitle1">Time</TypographyComp>
        <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={['TimePicker']}>
-                <TimePicker label="Pick time" />
+                <TimePicker label="Pick time" onChange={onTimeChange} />
             </DemoContainer>
         </LocalizationProvider>
       </div>
