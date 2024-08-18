@@ -1,7 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Box, Typography, Button } from '@mui/material';
+import { styled } from "@mui/system";
 
+const TopBox = styled(Box)(({ }) => ({
+    margin: "auto",
+    textAlign: "center",
+    marginTop: "2rem",
+    // padding: theme.spacing(0, 1),
+  }));
+
+const BoxContainer = styled(Box)(({ }) => ({
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 2,
+    // padding: theme.spacing(0, 1),
+  }));
 
 
 const Calendar = ({yearData, monthData}) => {
@@ -41,12 +56,12 @@ const Calendar = ({yearData, monthData}) => {
   },[yearData, monthData])
 
   return (
-    <Box sx={{margin: 'auto', textAlign: 'center', marginTop: '2rem' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
+    <TopBox>
+      <BoxContainer>
         <Button onClick={handlePreviousMonth} variant="contained">Previous</Button>
         <Typography variant="h5">{currentDate.format('MMMM YYYY')}</Typography>
         <Button onClick={handleNextMonth} variant="contained">Next</Button>
-      </Box>
+      </BoxContainer>
 
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 1 }}>
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
@@ -67,7 +82,7 @@ const Calendar = ({yearData, monthData}) => {
           </Box>
         ))}
       </Box>
-    </Box>
+    </TopBox>
   );
 };
 
