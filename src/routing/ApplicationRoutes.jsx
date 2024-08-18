@@ -20,6 +20,7 @@ const ApplicationRoutes = () => {
         <Route path="" element={<Navigate to="home" />} />
         {/* pages */}
         <Route path="home" element={<Home />} />
+        <Route path="/home/year/:year/month/:month" element={<Home />} />
       </Route>
       {/* 404 */}
       <Route path="*" element={<NotFound />} />

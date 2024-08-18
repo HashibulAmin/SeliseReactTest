@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import ButtonComp from "../../ui/atoms/Button/ButtonComp";
 import BasicModal from "../../ui/atoms/Modal/Modal"
@@ -7,19 +7,21 @@ import MonthSelector from "../../ui/organisms/MonthList/MonthList"
 import YearSelector from "../../ui/organisms/YearList/YearList"
 import Calendar from "../../ui/organisms/Calender/Calender"
 
+import {useParams} from "react-router-dom";
+
 export const monthList = {
-  'January': 1,
-  'February': 2, 
-  'March': 3, 
-  'April': 4, 
-  'May': 5, 
-  'June': 6,
-  'July': 7, 
-  'August': 8, 
-  'September': 9, 
-  'October': 10, 
-  'November': 11, 
-  'December': 12
+  'January': 0,
+  'February': 1, 
+  'March': 2, 
+  'April': 3, 
+  'May': 4, 
+  'June': 5,
+  'July': 6, 
+  'August': 7, 
+  'September': 8, 
+  'October': 9, 
+  'November': 10, 
+  'December': 11
 };
 
 const TopHeader = styled("div")(({ theme }) => ({
@@ -40,6 +42,8 @@ const StyledButton = styled(ButtonComp)(() => ({}));
 
 const Home = () => {
 
+  const {year, month} = useParams();
+
   const [yearData, setYearData] = useState(null)
   const [monthData, setMonthData] = useState(null)
 
@@ -49,11 +53,23 @@ const Home = () => {
 
   const handleMonthValue = (data) => {
     setMonthData(monthList[data])
+    // console.log(data)
   }
 
   const handleYearChange = (data) => {
     setYearData(data)
   }
+
+  useEffect(() => {
+    setYearData(Number(year))
+  }, [year])
+
+  useEffect(() => {
+    if(Number(month) < 13 && Number(month) > 0)
+      setMonthData(Number(month)-1)
+  }, [month])
+
+  // console.log(year, month)
 
 
   return (
