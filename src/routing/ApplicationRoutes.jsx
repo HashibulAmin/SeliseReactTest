@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Dashboard, Login, NotFound } from "./../components/pages";
+import { Home, Login, NotFound } from "./../components/pages";
 // import Dashboard from "../components/pages/Dashboard/Dashboard";
 import ProtectedRouting from "./ProtectedRouting";
 // import Login from "../components/pages/Login/Login";
@@ -17,9 +17,9 @@ const ApplicationRoutes = () => {
       {/* protected routes */}
       <Route path="/" element={<ProtectedRouting />}>
         {/* default */}
-        <Route path="" element={<Navigate to="dashboard" />} />
+        <Route path="" element={<Navigate to="home" />} />
         {/* pages */}
-        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="home" element={<Home />} />
       </Route>
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
