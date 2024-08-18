@@ -82,9 +82,13 @@ const Calendar = ({yearData, monthData, events}) => {
 
   // Memoized function to render the layout based on the filtered events
   const renderLayout = useCallback((date) => {
-    const filteredEvents = filterEventsByDate(date);
+    const filteredEventsUS = filterEventsByDate(date);
 
     // console.log(date, filteredEvents, 'event')
+
+    const filteredEvents = filteredEventsUS.sort(function (a, b) {
+      return a.eventTime.localeCompare(b.eventTime);
+    });
 
     return (
       <List sx={{ width: '100%', maxWidth: 360, maxHeight: 100, 
