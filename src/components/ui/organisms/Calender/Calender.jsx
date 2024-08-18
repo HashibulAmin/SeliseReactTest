@@ -6,6 +6,9 @@ import { styled } from "@mui/system";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
+import BasicModal from "../../atoms/Modal/Modal"
+
+
 const TopBox = styled(Box)(({ }) => ({
     margin: "auto",
     textAlign: "center",
@@ -24,6 +27,12 @@ const BoxContainer = styled(Box)(({ }) => ({
 
 const Calendar = ({yearData, monthData, events}) => {
   const [currentDate, setCurrentDate] = useState(dayjs());
+
+  const [selectedEvent, setSelectedEvent] = useState({});
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const startDay = currentDate.startOf('month').startOf('week');
   const endDay = currentDate.endOf('month').endOf('week');
@@ -65,7 +74,8 @@ const Calendar = ({yearData, monthData, events}) => {
   );
 
   const openClickEvent = (data) => {
-    console.log(data);
+    setSelectedEvent(data);
+    handleOpen()
   }
 
   // console.log(dayjs("30/08/2024"));
@@ -94,6 +104,7 @@ const Calendar = ({yearData, monthData, events}) => {
   
 
   return (
+    <React.Fragment>
     <TopBox>
       <BoxContainer>
         <Button onClick={handlePreviousMonth} variant="contained">Previous</Button>
@@ -121,6 +132,17 @@ const Calendar = ({yearData, monthData, events}) => {
         ))}
       </Box>
     </TopBox>
+
+    <BasicModal open={open} handleClose={handleClose}>
+      <div>Name: {selectedEvent.name}</div>
+      <div>Age: {selectedEvent.age}</div>
+      <div>Gender: {selectedEvent.gender === 1 ? "Male" : selectedEvent.gender === 2 ? "Female" : "Other"
+      }</div>
+      <div>Date: {selectedEvent.eventDate}</div>
+      <div>Time: {selectedEvent.eventTime}</div>
+    </BasicModal>
+
+    </React.Fragment>
   );
 };
 

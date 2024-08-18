@@ -83,7 +83,7 @@ const Home = () => {
     handleClose()
   }
 
-  console.log(appointmentLists);
+  // console.log(appointmentLists);
 
   return (
     <React.Fragment>
