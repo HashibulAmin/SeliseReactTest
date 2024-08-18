@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import ButtonComp from "../../ui/atoms/Button/ButtonComp";
 import BasicModal from "../../ui/atoms/Modal/Modal"
+import FormComponent from "../../ui/organisms/Form/Form"
 
 const TopHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -25,6 +26,8 @@ const Home = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  
+
 
 
   return (
@@ -39,7 +42,7 @@ const Home = () => {
 
 
     <BasicModal open={open} handleClose={handleClose}>
-      <div>form</div>
+      <FormComponent> </FormComponent>
     </BasicModal>
 
 

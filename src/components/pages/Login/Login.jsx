@@ -33,8 +33,8 @@ const StyledButton = styled(ButtonComp)(() => ({}));
 const Login = () => {
   const { handleLogin } = useLogin();
   const [credentials, setCredentials] = React.useState({
-    userName: "",
-    password: "",
+    userName: "userName",
+    password: "1234",
   });
 
   const updateCredentials = ({ userName, password }) => {
