@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import dayjs from 'dayjs';
 import { Box, Typography, Button } from '@mui/material';
 import { styled } from "@mui/system";
@@ -19,7 +19,7 @@ const BoxContainer = styled(Box)(({ }) => ({
   }));
 
 
-const Calendar = ({yearData, monthData}) => {
+const Calendar = ({yearData, monthData, events}) => {
   const [currentDate, setCurrentDate] = useState(dayjs());
 
   const startDay = currentDate.startOf('month').startOf('week');
@@ -55,6 +55,34 @@ const Calendar = ({yearData, monthData}) => {
     
   },[yearData, monthData])
 
+  // Function to filter events based on the selected date
+  const filterEventsByDate = useCallback(
+    (date) => events.filter(event => dayjs(event.eventDate).isSame(date, 'day')),
+    [events]
+  );
+
+  // Memoized function to render the layout based on the filtered events
+  const renderLayout = useCallback((date) => {
+    const filteredEvents = filterEventsByDate(date);
+
+    console.log(date, filteredEvents, 'event')
+
+    return (
+      <div>
+        {filteredEvents.length > 0 ? (
+          filteredEvents.map((event) => (
+            <div key={event.id} className="event">
+              <h3>{event.name}</h3>
+            </div>
+          ))
+        ) : (
+          <p>No events for this date.</p>
+        )}
+      </div>
+    );
+  }, [filterEventsByDate]);
+  
+
   return (
     <TopBox>
       <BoxContainer>
@@ -78,7 +106,7 @@ const Calendar = ({yearData, monthData}) => {
             }}
           >
             <Typography variant="body2">{date.format('D')}</Typography>
-            <div>data</div>
+            {renderLayout(date)}
           </Box>
         ))}
       </Box>

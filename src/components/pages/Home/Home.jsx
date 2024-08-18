@@ -96,7 +96,7 @@ const Home = () => {
       </TopHeader>
 
 
-    <Calendar yearData={yearData} monthData={monthData} />
+    <Calendar events={appointmentLists} yearData={yearData} monthData={monthData} />
 
     <BasicModal open={open} handleClose={handleClose}>
       <FormComponent handleFormSubmit={handleFormSubmit}> </FormComponent>

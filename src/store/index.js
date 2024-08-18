@@ -6,7 +6,7 @@ import authReducer from './auth';
 
 // Step 1: Create persist configuration
 const persistConfig = {
-  key: 'root',
+  key: 'seliseRoot',
   storage,
   whitelist: ['auth', 'appointment'], // Only persist the 'auth' reducer
 };

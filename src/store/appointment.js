@@ -10,7 +10,7 @@ export const appointment = createSlice({
   reducers: {
     addAppointment: (state, action) => {
       // console.log(action, 'redux')
-      state.lists = [...state.list, action.payload];
+      state.lists = [...state.lists, action.payload];
     },
     deleteAppointment: (state) => {
       state.lists = [];
