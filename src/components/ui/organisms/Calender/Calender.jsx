@@ -3,6 +3,9 @@ import dayjs from 'dayjs';
 import { Box, Typography, Button } from '@mui/material';
 import { styled } from "@mui/system";
 
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+
 const TopBox = styled(Box)(({ }) => ({
     margin: "auto",
     textAlign: "center",
@@ -57,28 +60,35 @@ const Calendar = ({yearData, monthData, events}) => {
 
   // Function to filter events based on the selected date
   const filterEventsByDate = useCallback(
-    (date) => events.filter(event => dayjs(event.eventDate).isSame(date, 'day')),
+    (date) => events.filter(event =>  dayjs(date).format('DD/MM/YYYY') === event.eventDate),
     [events]
   );
+
+  const openClickEvent = (data) => {
+    console.log(data);
+  }
+
+  // console.log(dayjs("30/08/2024"));
 
   // Memoized function to render the layout based on the filtered events
   const renderLayout = useCallback((date) => {
     const filteredEvents = filterEventsByDate(date);
 
-    console.log(date, filteredEvents, 'event')
+    // console.log(date, filteredEvents, 'event')
 
     return (
-      <div>
+      <List sx={{ width: '100%', maxWidth: 360, maxHeight: 100, 
+        bgcolor: 'background.paper', position: 'relative', overflow: 'auto', }}>
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event) => (
-            <div key={event.id} className="event">
-              <h3>{event.name}</h3>
-            </div>
+            <ListItem key={event.id} sx={{ background: '#F2F2F2'}}>
+              <div onClick={() => openClickEvent(event)}>{event.name}</div>
+            </ListItem>
           ))
         ) : (
           <p>No events for this date.</p>
         )}
-      </div>
+      </List>
     );
   }, [filterEventsByDate]);
   
