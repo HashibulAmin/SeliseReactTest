@@ -3,6 +3,8 @@ import { styled } from "@mui/material/styles";
 import ButtonComp from "../../ui/atoms/Button/ButtonComp";
 import BasicModal from "../../ui/atoms/Modal/Modal"
 import FormComponent from "../../ui/organisms/Form/Form"
+import MonthSelector from "../../ui/organisms/MonthList/MonthList"
+import YearSelector from "../../ui/organisms/YearList/YearList"
 
 const TopHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -26,7 +28,7 @@ const Home = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  
+
 
 
 
@@ -34,8 +36,8 @@ const Home = () => {
     <React.Fragment>
       <TopHeader>
         <TopDiv>
-          <div>year</div>
-          <div>month</div>
+          <MonthSelector />
+          <YearSelector />
         </TopDiv>
         <StyledButton onClick={handleOpen}>create appointment</StyledButton>
       </TopHeader>

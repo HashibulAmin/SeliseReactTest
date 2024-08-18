@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import { styled } from '@mui/system';
 
-const months = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
+const years = [
+  '2019', '2020', '2021',
 ];
 
 const StyledSelect = styled(Select)({
@@ -22,7 +21,7 @@ const StyledSelect = styled(Select)({
   },
 });
 
-const MonthSelector = () => {
+const YearSelector = () => {
   const [selectedMonth, setSelectedMonth] = useState('');
 
   const handleChange = (event) => {
@@ -32,16 +31,16 @@ const MonthSelector = () => {
   return (
     <Box sx={{ width: 300, margin: 'auto', marginTop: 2 }}>
       <FormControl fullWidth>
-        <InputLabel id="month-select-label">Month</InputLabel>
+        <InputLabel id="year-select-label">Year</InputLabel>
         <StyledSelect
-          labelId="month-select-label"
+          labelId="year-select-label"
           value={selectedMonth}
           onChange={handleChange}
-          label="Month"
+          label="Year"
         >
-          {months.map((month, index) => (
-            <MenuItem key={index} value={month}>
-              {month}
+          {years.map((year, index) => (
+            <MenuItem key={index} value={year}>
+              {year}
             </MenuItem>
           ))}
         </StyledSelect>
@@ -50,4 +49,4 @@ const MonthSelector = () => {
   );
 };
 
-export default MonthSelector;
+export default YearSelector;
